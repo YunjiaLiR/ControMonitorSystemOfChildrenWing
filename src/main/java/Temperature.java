@@ -15,7 +15,7 @@ public class Temperature
         idealT = setIdealT(wardID);
         sensor = new EnvironmentalSystem();
         currentT = sensor.getTempFeed().getTemp(wardID);
-        identifyHeatingState();
+        isHeatingOn = identifyHeatingState();
         changeHeatingState();
     }
     private double setIdealT(int wardID)
@@ -65,16 +65,13 @@ public class Temperature
             return "Invalid Name";
         }
     }
-    public void identifyHeatingState()
+    private boolean identifyHeatingState()
     {
         if (currentT< (idealT-0.5)||currentT>(idealT+0.5))
         {
-            isHeatingOn = true;
+            return true;
         }
-        else
-        {
-            isHeatingOn = false;
-        }
+        return false;
     }
     public void changeHeatingState()
     {

@@ -7,7 +7,8 @@ public class Main {
         System.out.println(tem1.getWardName()+": Current Temperature:"+ tem1.getCurrentTemperature()+", Ideal Temperature:"+ tem1.getIdealTemperature()+ ", Heating is "+tem1.getHeatingState());
         System.out.println(tem2.getWardName()+": Current Temperature:"+ tem2.getCurrentTemperature()+", Ideal Temperature:"+ tem2.getIdealTemperature()+ ", Heating is "+tem2.getHeatingState());
         System.out.println(tem3.getWardName()+": Current Temperature:"+ tem3.getCurrentTemperature()+", Ideal Temperature:"+ tem3.getIdealTemperature()+ ", Heating is "+tem3.getHeatingState());
-
+        Humidity humidity = new Humidity();
+        System.out.println("Inside humidity:"+humidity.getInsideHumidity()+", Outside humidity:"+humidity.getOutsideHumidity()+", Difference between inside and outside:"+humidity.getDifference()+", Dehumidifier is "+humidity.getDehumidifierState());
 
     }
 }
