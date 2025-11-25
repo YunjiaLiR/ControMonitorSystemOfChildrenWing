@@ -1,11 +1,13 @@
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main {
     public static void main(String[] args) {
         JFrame f = new JFrame();
-        f.setLayout(new GridLayout(1,3));
+        f.setLayout(new GridLayout(1,4));
         f.setSize(800,600);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -33,7 +35,7 @@ public class Main {
         northPanel.add(new JLabel("Heating is " +tem1.getHeatingState()));
         if(tem1.getHeatingState().contains("On"))
         {
-            northPanel.setBackground(Color.red);
+            northPanel.setBackground(Color.RED);
         }
         else {
             northPanel.setBackground(Color.white);
@@ -46,7 +48,7 @@ public class Main {
         centralPanel.add(new JLabel("Heating is " +tem2.getHeatingState()));
         if(tem2.getHeatingState().contains("On"))
         {
-            centralPanel.setBackground(Color.red);
+            centralPanel.setBackground(Color.RED);
         }
         else {
             centralPanel.setBackground(Color.white);
@@ -59,24 +61,74 @@ public class Main {
         southPanel.add(new JLabel("Heating is " +tem3.getHeatingState()));
         if(tem3.getHeatingState().contains("On"))
         {
-            southPanel.setBackground(Color.red);
+            southPanel.setBackground(Color.RED);
         }
         else {
             southPanel.setBackground(Color.white);
         }
 
         JPanel humPanel = new JPanel();
-        //Humidity humidity = new Humidity();
+        humPanel.setBackground(Color.white);
+        humPanel.setBorder(new LineBorder(Color.BLACK));
+
+        Humidity humidity = new Humidity();
+        humPanel.add(new JLabel("Inside humidity:"+humidity.getInsideHumidity()));
+        humPanel.add(new JLabel("Outside humidity:"+humidity.getOutsideHumidity()));
+        humPanel.add(new JLabel("Difference between inside and outside:"+humidity.getDifference()));
+        humPanel.add(new JLabel("Dehumidifier is "+humidity.getDehumidifierState()));
+        if(humidity.getDehumidifierState().contains("On"))
+        {
+            humPanel.setBackground(Color.RED);
+        }
+        else {
+            humPanel.setBackground(Color.white);
+        }
+
 
         JPanel airPanel = new JPanel();
+        airPanel.setBackground(Color.white);
+        airPanel.setBorder(new LineBorder(Color.BLACK));
+        Air air = new Air();
+        airPanel.add(new JLabel("Current Population Level"+ air.getCurrentLevel()));
+        airPanel.add(new JLabel("Air Purifier is"+ air.getPurifierState()));
+        if(air.getPurifierState().contains("On"))
+        {
+            airPanel.setBackground(Color.RED);
+        }
+        else {
+            airPanel.setBackground(Color.white);
+        }
+
+
+        JPanel scanPanel = new JPanel();
+        scanPanel.setBorder(new LineBorder(Color.BLACK));
+        scanPanel.setLayout(new GridLayout(2,1));
 
         f.add(temPanel);
         f.add(humPanel);
         f.add(airPanel);
+        f.add(scanPanel);
         f.setVisible(true);
 
-        //Humidity humidity = new Humidity();
-        //System.out.println("Inside humidity:"+humidity.getInsideHumidity()+", Outside humidity:"+humidity.getOutsideHumidity()+", Difference between inside and outside:"+humidity.getDifference()+", Dehumidifier is "+humidity.getDehumidifierState());
-        //Air air = new Air();
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                f.repaint();
+            }
+        });
+        timer.start();
+
+        Timer timer2 = new Timer(30000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(tem1.getWardName()+"Current Temperature:"+tem1.getCurrentTemperature()+"Ideal Temperature:"+ tem1.getIdealTemperature()+"Heating is " +tem1.getHeatingState());
+                System.out.println(tem2.getWardName()+"Current Temperature:"+tem2.getCurrentTemperature()+"Ideal Temperature:"+ tem2.getIdealTemperature()+"Heating is " +tem2.getHeatingState());
+                System.out.println(tem3.getWardName()+"Current Temperature:"+tem3.getCurrentTemperature()+"Ideal Temperature:"+ tem3.getIdealTemperature()+"Heating is " +tem3.getHeatingState());
+                System.out.println("Inside humidity:"+humidity.getInsideHumidity()+ "Outside humidity:"+humidity.getOutsideHumidity()+"Difference between inside and outside:"+humidity.getDifference()+"Dehumidifier is "+humidity.getDehumidifierState());
+                System.out.println("Current Population Level"+ air.getCurrentLevel()+"Air Purifier is"+ air.getPurifierState());
+            }
+        });
+        timer.start();
+
     }
 }
